@@ -22,27 +22,39 @@ public class FibonacciServiceImpl implements FibonacciService {
         int semilla2 = (seconds - semilla1)/10; //15-5/10 =1
         // en java la división es entera. La que no es división entera en java es // y retornaría un flotante
         //int semilla2 = seconds / 10 --> 1
-        String hora = hours  + ":"+ minutes +":"+seconds;
 
+        String hora = hours  + ":"+ minutes +":"+seconds;
+        
+        List<Integer> serie = new ArrayList<>();
+        
+        //String hora,List<Integer> serieFibonacci
+        serie = devolverSerie(semilla1, semilla2, seconds);
+        FibonacciDTO respuestaSerie = new FibonacciDTO(hora, serie);
+        return respuestaSerie;
+    }
+
+    public List<Integer> devolverSerie(int semilla1, int semilla2, int iteraciones){
+        
         List<Integer> serieFibonacci = new ArrayList<>();
+        if(iteraciones <0){
+            throw new IllegalArgumentException();
+        }
+        
         serieFibonacci.add(semilla1);
         serieFibonacci.add(semilla2);
-     
+        
         int temporal = 0;
         int suma = 0;
         //while (temporal < seconds && serieFibonacci.size() <= seconds ) { //para que imprima sólo la longitud del fibonacci
-        while (temporal < seconds) { // && serieFibonacci.size() <= seconds
+        while (temporal < iteraciones) { // && serieFibonacci.size() <= seconds
             //serieFibonacci.add
             suma = serieFibonacci.get(serieFibonacci.size()-1) + serieFibonacci.get(serieFibonacci.size()-2);
             // La primera vez suma = 1+5
             serieFibonacci.add(suma);
             temporal++;
         }
- 
-        //String hora,List<Integer> serieFibonacci
-        FibonacciDTO respuestaSerieFib = new FibonacciDTO(hora, serieFibonacci);
-        return respuestaSerieFib;
-
-    }  
-    
+        return serieFibonacci;
+        
+    }
+       
 }
